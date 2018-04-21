@@ -246,25 +246,25 @@ public class X5WebChromeClient extends WebChromeClient {
         }, intent, FILECHOOSER_RESULTCODE);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public boolean onShowFileChooser(WebView webView, final ValueCallback<Uri[]> filePathsCallback, final FileChooserParams fileChooserParams) {
-        Intent intent = fileChooserParams.createIntent();
-        try {
-            parentEngine.cordova.startActivityForResult(new CordovaPlugin() {
-                @Override
-                public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-                    Uri[] result = FileChooserParams.parseResult(resultCode, intent);
-                    Log.d(LOG_TAG, "Receive file chooser URL: " + result);
-                    filePathsCallback.onReceiveValue(result);
-                }
-            }, intent, FILECHOOSER_RESULTCODE);
-        } catch (ActivityNotFoundException e) {
-            Log.w(LOG_TAG, "No activity found to handle file chooser intent." + e);
-            filePathsCallback.onReceiveValue(null);
-        }
-        return true;
-    }
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    public boolean onShowFileChooser(WebView webView, final ValueCallback<Uri[]> filePathsCallback, final FileChooserParams fileChooserParams) {
+//        Intent intent = fileChooserParams.createIntent();
+//        try {
+//            parentEngine.cordova.startActivityForResult(new CordovaPlugin() {
+//                @Override
+//                public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//                    Uri[] result = FileChooserParams.parseResult(resultCode, intent);
+//                    Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+//                    filePathsCallback.onReceiveValue(result);
+//                }
+//            }, intent, FILECHOOSER_RESULTCODE);
+//        } catch (ActivityNotFoundException e) {
+//            Log.w(LOG_TAG, "No activity found to handle file chooser intent." + e);
+//            filePathsCallback.onReceiveValue(null);
+//        }
+//        return true;
+//    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void onPermissionRequest(final PermissionRequest request) {
