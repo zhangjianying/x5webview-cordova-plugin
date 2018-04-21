@@ -154,6 +154,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
 
         // Enable JavaScript
         final WebSettings settings = webView.getSettings();
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
