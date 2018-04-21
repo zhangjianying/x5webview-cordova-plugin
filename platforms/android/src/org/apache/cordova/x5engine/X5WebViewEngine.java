@@ -103,23 +103,33 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         this.client = client;
         this.resourceApi = resourceApi;
         this.pluginManager = pluginManager;
-        this.nativeToJsMessageQueue = nativeToJsMessageQueue;
+
         webView.init(this, cordova);
 
         initWebViewSettings();
-
-        nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode.OnlineEventsBridgeModeDelegate() {
+        NativeToJsMessageQueue.OnlineEventsBridgeMode onlineEventsBridgeMode = new NativeToJsMessageQueue.OnlineEventsBridgeMode(new NativeToJsMessageQueue.OnlineEventsBridgeMode.OnlineEventsBridgeModeDelegate() {
             @Override
             public void setNetworkAvailable(boolean value) {
                 webView.setNetworkAvailable(value);
             }
+
             @Override
             public void runOnUiThread(Runnable r) {
                 X5WebViewEngine.this.cordova.getActivity().runOnUiThread(r);
             }
-        }));
+        });
+        nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
+        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
+
+//        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
+//        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
+//        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
+        this.nativeToJsMessageQueue = nativeToJsMessageQueue;
+      //  this.nativeToJsMessageQueue.setBridgeMode(0);
+
         bridge = new CordovaBridge(pluginManager, nativeToJsMessageQueue);
         exposeJsInterface(webView, bridge);
+
     }
 
     @Override
@@ -140,8 +150,8 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     @SuppressWarnings("deprecation")
     private void initWebViewSettings() {
-        webView.setInitialScale(0);
-        webView.setVerticalScrollBarEnabled(false);
+        webView.setVerticalScrollBarEnabled(false);        webView.setInitialScale(0);
+
         // Enable JavaScript
         final WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -205,7 +215,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
 
         // Enable AppCache
         // Fix for CB-2282
-        settings.setAppCacheMaxSize(5 * 1048576);
+        settings.setAppCacheMaxSize(10 * 1048576);
         settings.setAppCachePath(databasePath);
         settings.setAppCacheEnabled(true);
 
@@ -248,7 +258,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void enableRemoteDebugging() {
         try {
-            WebView.setWebContentsDebuggingEnabled(true);
+            WebView.setWebContentsDebuggingEnabled(false);
         } catch (IllegalArgumentException e) {
             Log.d(TAG, "You have one job! To turn on Remote Web Debugging! YOU HAVE FAILED! ");
             e.printStackTrace();
