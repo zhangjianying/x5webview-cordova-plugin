@@ -150,15 +150,18 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
     @SuppressLint({"NewApi", "SetJavaScriptEnabled"})
     @SuppressWarnings("deprecation")
     private void initWebViewSettings() {
-        webView.setVerticalScrollBarEnabled(false);        webView.setInitialScale(0);
+        webView.setVerticalScrollBarEnabled(false);        
+        webView.setInitialScale(0);
 
         // Enable JavaScript
         final WebSettings settings = webView.getSettings();
         settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
-
+        // settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        
         // Set the nav dump for HTC 2.x devices (disabling for ICS, deprecated entirely for Jellybean 4.2)
         try {
             Method gingerbread_getMethod =  WebSettings.class.getMethod("setNavDump", new Class[] { boolean.class });
@@ -366,7 +369,10 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
             @Override
             public void onReceiveValue(Object o) {
                 if(o instanceof String)
-                    proxyCallback.onReceiveValue((String) o);
+                    // proxyCallback.onReceiveValue((String) o);
+                      if (proxyCallback != null) {
+ +                        proxyCallback.onReceiveValue((String) o);
+ +                    }
             }
         };
         webView.evaluateJavascript(js,mCallback);
