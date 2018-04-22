@@ -17,23 +17,30 @@
 
     <!-- android -->
     <platform name="android">
-
         <config-file target="res/xml/config.xml" parent="/*">
             <preference name="webView" value="org.apache.cordova.x5engine.X5WebViewEngine"/>
             <preference name="appUserAgent" value="x5webview"/>
             <preference name="android-minSdkVersion" value="15" />
-	    <allow-navigation href="*"></allow-navigation>
+	        <allow-navigation href="*"></allow-navigation>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.READ_SETTINGS" />
+            <uses-permission android:name="android.permission.WRITE_SETTINGS" />
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	    
+            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+            <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
+            <uses-permission android:name="android.permission.GET_TASKS" />
         </config-file>
 
+        <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5Application.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CookieManager.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CordovaClientCertRequest.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5CordovaHttpAuthHandler.java" target-dir="src/org/apache/cordova/x5engine"/>
@@ -43,9 +50,11 @@
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
 
-        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.5.0.1004_43500_sharewithdownload_withoutGame_obfs_20170801_113025.jar" target-dir="libs"/>
-	<source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
-
+        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar" target-dir="libs"/>
+	    <source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
+        
+        <!-- 修改 AndroidManifest.xml application  add android:name="com.zsoftware.encryptassets.ImpEncryptApp" -->
+        <hook type="after_plugin_add" src="scripts/changeAppParent.js" />
     </platform>
 
     <info>
