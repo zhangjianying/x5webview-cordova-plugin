@@ -14,7 +14,7 @@
         <engine name="cordova-android" version=">=4"/>
         <engine name="cordova-plugman" version=">=5.2.0"/><!-- needed for gradleReference support -->
     </engines>
-
+  
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
@@ -23,6 +23,10 @@
             <preference name="android-minSdkVersion" value="15" />
 	        <allow-navigation href="*"></allow-navigation>
         </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+		    <service android:name="org.apache.cordova.x5engine.X5LoadService"/>
+		</config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
