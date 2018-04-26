@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Paint;
 import android.os.Build;
 import android.util.Log;
 import android.view.View;
@@ -120,7 +121,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         });
         nativeToJsMessageQueue.addBridgeMode(new NativeToJsMessageQueue.EvalBridgeMode(this, cordova));
         nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
-
+        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
 //        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
 //        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
 //        nativeToJsMessageQueue.addBridgeMode(onlineEventsBridgeMode);
@@ -155,13 +156,13 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
 
         // Enable JavaScript
         final WebSettings settings = webView.getSettings();
-        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+//    settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        settings.setAllowFileAccess(true);
         settings.setPluginState(WebSettings.PluginState.ON_DEMAND);
         settings.setJavaScriptEnabled(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        // settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
-        
+         settings.setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+
         // Set the nav dump for HTC 2.x devices (disabling for ICS, deprecated entirely for Jellybean 4.2)
         try {
             Method gingerbread_getMethod =  WebSettings.class.getMethod("setNavDump", new Class[] { boolean.class });
@@ -224,10 +225,10 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
         settings.setAppCacheEnabled(true);
 
         //
-        settings.setUseWideViewPort(true);
+        settings.setUseWideViewPort(false);
 
         //如果webview内容宽度大于显示区域的宽度,那么将内容缩小,以适应显示区域的宽度, 默认是false
-        settings.setLoadWithOverviewMode(true);
+        settings.setLoadWithOverviewMode(false);
 
         // Fix for CB-1405
         // Google issue 4641
@@ -262,7 +263,7 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void enableRemoteDebugging() {
         try {
-            WebView.setWebContentsDebuggingEnabled(false);
+            webView.setWebContentsDebuggingEnabled(true);
         } catch (IllegalArgumentException e) {
             Log.d(TAG, "You have one job! To turn on Remote Web Debugging! YOU HAVE FAILED! ");
             e.printStackTrace();
