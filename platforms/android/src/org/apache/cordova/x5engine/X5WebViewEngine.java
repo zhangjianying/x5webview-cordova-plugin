@@ -32,6 +32,8 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 
+import com.tencent.smtt.export.external.extension.interfaces.IX5WebSettingsExtension;
+import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
@@ -226,6 +228,16 @@ public class X5WebViewEngine implements CordovaWebViewEngine {
 
         //
         settings.setUseWideViewPort(false);
+
+        //下面方法去掉X5自带滚动小方块
+        IX5WebViewExtension ix5 = webView.getX5WebViewExtension();
+        if (null != ix5) {
+            ix5.setScrollBarFadingEnabled(false);
+
+            IX5WebSettingsExtension settingsExtension = ix5.getSettingsExtension();
+            settingsExtension.setUseQProxy(false); // QQ 代理 关闭
+            settingsExtension.setPreFectch(false); //预加载 关闭
+        }
 
         //如果webview内容宽度大于显示区域的宽度,那么将内容缩小,以适应显示区域的宽度, 默认是false
         settings.setLoadWithOverviewMode(false);
