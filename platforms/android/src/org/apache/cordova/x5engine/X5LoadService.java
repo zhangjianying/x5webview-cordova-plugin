@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
-
+import android.os.Build;
 import com.tencent.smtt.sdk.QbSdk;
 
 
@@ -34,7 +34,9 @@ public class X5LoadService extends Service {
 
     private void initX5() {
         initHandler();
-        setHandlerAction(1);
+		if (Build.VERSION.SDK_INT <= 22) {
+			setHandlerAction(1);
+		}
         //  预加载X5内核
         QbSdk.initX5Environment(getApplicationContext(), cb);
     }
@@ -89,12 +91,18 @@ public class X5LoadService extends Service {
         public void onViewInitFinished(boolean arg0) {
             //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
             Log.d("app", " onViewInitFinished is " + arg0);
-             setHandlerAction(arg0 ? 2 : 3);
+             
+			 if (Build.VERSION.SDK_INT <= 22) {
+				setHandlerAction(arg0 ? 2 : 3);
+			}
         }
 
         @Override
         public void onCoreInitFinished() {
-            setHandlerAction(3);
+           
+			if (Build.VERSION.SDK_INT <= 22) {
+				 setHandlerAction(3);
+			}
         }
     };
 
