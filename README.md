@@ -70,3 +70,10 @@ cordova plugin add https://github.com/zhangjianying/x5webview-cordova-plugin.git
 crosswalk只更新到chrome53版本停更了.而且是需要全量打包,而X5借助微信/QQ庞大的装机量无需自带内核到应用.
 
 
+
+ •	64位手机无法加载x5(libmttwebview.so is 32-bit instead of 64-bit)
+x5内核暂时不提供64位的so文件,在64位手机上需要让AP以32位模式运行。具体操作如下： 
+1.如果使用是Eclipse则需要将所有的.so文件都放置在so加载目录：lib/armeabi文件夹下(没有该目录则新建一个，AP中没有使用到.so文件则需要拷贝任意一个32位的so文件到该目录下,如果没有合适的so可以到官网http://x5.tencent.com/tbs/sdk.html下载官网“SDK接入示例“,拷贝对应目录下的liblbs.so文件)，lib文件夹下不要有其他以”armeabi“开头的文件夹。 
+2.如果使用的是 Android studio则需要进行两项配置， 
+(1)打开对应module中的build.gradle文件,在文件的android{}中的defaultConfig{}里(如果没有defaultConfig{}则手动添加)添加如下配置: ndk{abiFilters "armeabi"}，如果配置后编译报错，那么需要在gradle.properties文件中加上Android.useDeprecatedNdk=true； 
+(2)找出build.gradle中配置的so加载目录:jniLibs.srcDir:customerDir,如果没有该项配置则so加载目录默认为：src/main/jniLibs，需要将.so文件都放置在so加载目录的armeabi文件夹下(没有该目录则新建一个，AP中没有使用到.so文件则需要拷贝任意一个32位的so文件到该目录下，如果没有合适的so可以到官网http://x5.tencent.com/tbs/sdk.html下载官网“SDK接入示例“,拷贝对应目录下的liblbs.so文件)，so加载目录下不要有其他以”armeabi“开头的文件夹。 
