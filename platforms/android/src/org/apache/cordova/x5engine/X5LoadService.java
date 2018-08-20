@@ -2,13 +2,13 @@ package org.apache.cordova.x5engine;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -16,20 +16,30 @@ import android.os.Build;
 import com.tencent.smtt.sdk.QbSdk;
 
 
-public class X5LoadService extends Service {
+public class X5LoadService extends IntentService {
     private Dialog LoadingDialog = null;
     private Handler LoadingHandler = null;
 
-    @Nullable
+    public X5LoadService() {
+        super("X5LoadService");
+    }
+    public X5LoadService(String name) {
+        super(name);
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
     @Override
+    protected void onHandleIntent(Intent intent) {
+        initX5();
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
-        initX5();
     }
 
     private void initX5() {
