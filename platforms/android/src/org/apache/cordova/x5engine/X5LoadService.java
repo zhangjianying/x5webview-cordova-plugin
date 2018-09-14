@@ -44,7 +44,7 @@ public class X5LoadService extends IntentService {
 
     private void initX5() {
         initHandler();
-		if (Build.VERSION.SDK_INT <= 22) {
+		if (Build.VERSION.SDK_INT <= 20) {
 			setHandlerAction(1);
 		}
         //  预加载X5内核
@@ -102,7 +102,7 @@ public class X5LoadService extends IntentService {
             //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
             Log.d("app", " onViewInitFinished is " + arg0);
              
-			 if (Build.VERSION.SDK_INT <= 22) {
+			 if (Build.VERSION.SDK_INT <= 20) {
 				setHandlerAction(arg0 ? 2 : 3);
 			}
         }
@@ -110,7 +110,7 @@ public class X5LoadService extends IntentService {
         @Override
         public void onCoreInitFinished() {
            
-			if (Build.VERSION.SDK_INT <= 22) {
+			if (Build.VERSION.SDK_INT <= 20) {
 				 setHandlerAction(3);
 			}
         }
