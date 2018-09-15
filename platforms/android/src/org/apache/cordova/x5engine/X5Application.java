@@ -15,7 +15,7 @@ public class X5Application extends Application {
         super.onCreate();
         try {
             //预加载x5内核
-            QbSdk.setDownloadWithoutWifi(false);
+            QbSdk.setDownloadWithoutWifi(true);
             Intent intent = new Intent(this, X5LoadService.class);
             startService(intent);
         } catch (Exception ex) {
