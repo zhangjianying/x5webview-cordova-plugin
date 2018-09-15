@@ -74,21 +74,21 @@ public class X5LoadService extends IntentService {
                 super.handleMessage(msg);
                 switch (msg.what) {
                     case 1:
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                        builder.setTitle("请稍等...");
-                        builder.setMessage("初始化内核引擎...");
-                        builder.setCancelable(false);
-                        LoadingDialog = builder.create();
-                        LoadingDialog.setCancelable(false);
-                        LoadingDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                        LoadingDialog.show();
+                        // AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                        // builder.setTitle("请稍等...");
+                        // builder.setMessage("初始化内核引擎...");
+                        // builder.setCancelable(false);
+                        // LoadingDialog = builder.create();
+                        // LoadingDialog.setCancelable(false);
+                        // LoadingDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
+                        // LoadingDialog.show();
                         break;
                     case 2:
-                        LoadingDialog.dismiss();
+                        // LoadingDialog.dismiss();
                         break;
                     case 3:
-                        Toast.makeText(X5LoadService.this, "引擎初始化失败", Toast.LENGTH_LONG);
-                        LoadingDialog.dismiss();
+                        // Toast.makeText(X5LoadService.this, "引擎初始化失败", Toast.LENGTH_LONG);
+                        // LoadingDialog.dismiss();
                         break;
                 }
             }
