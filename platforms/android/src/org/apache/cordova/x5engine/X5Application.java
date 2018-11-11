@@ -21,6 +21,14 @@ public class X5Application extends Application {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+		
+		
+		//fix https://code.google.com/p/android/issues/detail?id=20915
+		try {
+            Class.forName("android.os.AsyncTask");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 
