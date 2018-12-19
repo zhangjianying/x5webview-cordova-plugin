@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 import android.os.Build;
+import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
 
 
@@ -47,6 +48,11 @@ public class X5LoadService extends IntentService {
 		if (Build.VERSION.SDK_INT <= 20) {
 			setHandlerAction(1);
 		}
+		
+		//启动加速 http://soft.tbs.imtt.qq.com/17421/tbs_res_imtt_tbs_release_dex2oat.doc
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put(TbsCoreSettings.TBS_SETTINGS_USE_SPEEDY_CLASSLOADER, true);
+        QbSdk.initTbsSettings(map);
         //  预加载X5内核
         QbSdk.initX5Environment(getApplicationContext(), cb);
     }

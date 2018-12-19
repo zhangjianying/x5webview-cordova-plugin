@@ -26,6 +26,9 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 		    <service android:name="org.apache.cordova.x5engine.X5LoadService"/>
+            <service android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" ></service>
 		</config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
@@ -55,7 +58,7 @@
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewClient.java" target-dir="src/org/apache/cordova/x5engine"/>
         <source-file src="platforms/android/src/org/apache/cordova/x5engine/X5WebViewEngine.java" target-dir="src/org/apache/cordova/x5engine"/>
 
-        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar" target-dir="libs"/>
+        <source-file src="platforms/android/libs/tbs_sdk_thirdapp_v3.6.0.1371_43624_sharewithdownload_withoutGame_obfs_20181106_121046.jar" target-dir="libs"/>
 	    <source-file src="platforms/android/libs/armeabi/liblbs.so" target-dir="libs/armeabi"/>
         
         <!-- 修改 AndroidManifest.xml application  add android:name="com.zsoftware.encryptassets.ImpEncryptApp" -->
