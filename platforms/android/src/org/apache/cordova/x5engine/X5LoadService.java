@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.os.Build;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
+import java.util.HashMap;
 
 
 public class X5LoadService extends IntentService {
